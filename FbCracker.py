@@ -219,13 +219,14 @@ def printb(x,b):
 	if b:
 		print(x)
 def savelastcommand():
-	res =''
-	for i in sys.argv:
-		res = res +' '+i
-	lp=curentDir()+'last.cmd'
-	strm=open(lp,'w')
-	strm.write(res+'\n')
-	strm.close()
+	if sys.argv[1]!='last':
+		res =''
+		for i in sys.argv:
+			res = res +' '+i
+		lp=curentDir()+'last.cmd'
+		strm=open(lp,'w')
+		strm.write(res+'\n')
+		strm.close()
 
 def gettokens(b):
 #	b=True
@@ -233,13 +234,13 @@ def gettokens(b):
 	result.url='https://mobile.facebook.com/'
 	result.Reqheaders={"X-Forwarded-For":"45.67.43.12","User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:48.0) Gecko/20100101 Firefox/48.0","Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8","Accept-Language": "en-US,en;q=0.5","Upgrade-Insecure-Requests": "1"}
 	result.sucs=False	
+	printb('Requesting Tokens ...',b)
 	result.req=requests.get(url=result.url,headers=result.headers)
 	result.li=''
 	result.lsd=''
 	result.m_ts=''
 	result.datr=''
 
-	printb('Requesting Tokens ...',b)
 	if result.req.status_code==200:
 		if 'name="li" value="' in result.req.text:
 			result.li=getPar(result.req.text,'li')		
