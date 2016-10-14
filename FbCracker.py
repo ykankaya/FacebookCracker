@@ -128,7 +128,8 @@ def load():
 		with open(curentDir()+'last.cmd') as v:
 			ex=v.readlines()
 			if len(ex[0]) > 0:
-				os.system('python '+ex[0])
+				os.chdir(ex[0].strip())
+				os.system(ex[1])
 		exit()
 	else:
 		ipath=sys.argv[1]
@@ -212,9 +213,13 @@ def info ():
 			ids ='From ['+ipath+']  ['+stx.Green+ids 
 		else :	
 			ids="     ["+stx.Green+listtostr(idlist)+stx.yel+", "
-	print stx.yel+'Ids       loaded '+ids[0:len(ids)-2]+stx.yel+"]"
-	print         'Passwords loaded From ['+stx.Green+ppath+stx.yel+'] ['+stx.Green+str(len(paswordlist))+stx.yel+"]"
-	print 'Starting From '+str(startindex)+stx.lin
+	
+	try:
+		print stx.yel+'Ids       loaded '+ids[0:len(ids)-2]+stx.yel+"]"
+		print         'Passwords loaded From ['+stx.Green+ppath+stx.yel+'] ['+stx.Green+str(len(paswordlist))+stx.yel+"]"
+		print 'Starting From '+str(startindex)+stx.lin
+	except Exception:
+		print('error with the file paths')
 def printb(x,b):
 	if b:
 		print(x)
@@ -225,7 +230,8 @@ def savelastcommand():
 			res = res +' '+i
 		lp=curentDir()+'last.cmd'
 		strm=open(lp,'w')
-		strm.write(res+'\n')
+		pwd=os.getcwd()
+		strm.write(pwd+'\npython '+res+'\n')
 		strm.close()
 
 def gettokens(b):
